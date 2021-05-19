@@ -37,7 +37,6 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildItem(BuildContext context, int index) {
     final todo = list.getItemByIndex(index);
-
     return TodoTile(
       todo: todo,
       onDelete: (id) => setState(() => list.removeItem(id)),
@@ -47,7 +46,6 @@ class _HomePageState extends State<HomePage> {
 
   void _addTodo() {
     final textController = TextEditingController();
-
     showDialog(
       context: context,
       builder: (context) {
@@ -66,13 +64,8 @@ class _HomePageState extends State<HomePage> {
             TextButton(
               onPressed: () {
                 final value = textController.value.text;
-
-                if (value.isEmpty) {
-                  return;
-                }
-
+                if (value.isEmpty) return;
                 setState(() => list.addTodo(textController.value.text));
-
                 textController.clear();
                 Navigator.pop(context);
               },

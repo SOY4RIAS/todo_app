@@ -5,7 +5,7 @@ analyzer:
   strong-mode:
     implicit-casts: false
   language:
-      strict-inference: true
+    strict-inference: true
 
 linter:
   rules:

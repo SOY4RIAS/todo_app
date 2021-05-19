@@ -5,13 +5,13 @@ import 'dismiss_container.dart';
 
 class TodoTile extends StatelessWidget {
   final Todo todo;
-  final void Function(int) onDelete;
-  final void Function(Todo) onTap;
+  final void Function(int)? onDelete;
+  final void Function(Todo)? onTap;
 
   TodoTile({
     required this.todo,
-    required this.onDelete,
-    required this.onTap,
+    this.onDelete,
+    this.onTap,
   });
 
   @override
@@ -27,11 +27,11 @@ class TodoTile extends StatelessWidget {
       direction: DismissDirection.startToEnd,
       onDismissed: (direction) {
         if (direction == DismissDirection.startToEnd) {
-          onDelete(todo.id!);
+          onDelete?.call(todo.id!);
         }
       },
       child: ListTile(
-        onTap: () => onTap(todo),
+        onTap: () => onTap?.call(todo),
         title: Text(todo.title),
         trailing: Icon(
           todo.status.icon,
