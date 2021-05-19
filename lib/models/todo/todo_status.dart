@@ -1,4 +1,4 @@
-part of './todo.dart';
+part of 'todo.dart';
 
 class _TodoStatus {
   final IconData icon;
@@ -7,7 +7,7 @@ class _TodoStatus {
   const _TodoStatus(this.icon, this.color);
 }
 
-const _TODO_STATUS = <bool, _TodoStatus>{
+const Map<bool, _TodoStatus> _TODO_STATUS = {
   true: _TodoStatus(Icons.check, Colors.green),
   false: _TodoStatus(Icons.pending_actions, Colors.grey),
 };

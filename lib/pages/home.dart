@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:todo_app/models/todo/todo.dart';
+import 'package:todo_app/widgets/todo_tile.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -35,27 +36,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildItem(BuildContext context, int index) {
-    final todo = list.getItem(index);
-    final status = todo.status;
-    final key = UniqueKey();
+    final todo = list.getItemByIndex(index);
 
-    return Dismissible(
-      key: Key(key.toString()),
-      background: _DissmissContent(color: Colors.red),
-      direction: DismissDirection.startToEnd,
-      onDismissed: (direction) {
-        if (direction == DismissDirection.startToEnd) {
-          setState(() => list.removeItem(index));
-        }
-      },
-      child: ListTile(
-        onTap: () => setState(todo.toggleDone),
-        title: Text(todo.title),
-        trailing: Icon(
-          status.icon,
-          color: status.color,
-        ),
-      ),
+    return TodoTile(
+      todo: todo,
+      onDelete: (id) => setState(() => list.removeItem(id)),
+      onTap: (todo) => setState(todo.toggleDone),
     );
   }
 
@@ -95,32 +81,6 @@ class _HomePageState extends State<HomePage> {
           ],
         );
       },
-    );
-  }
-}
-
-class _DissmissContent extends StatelessWidget {
-  final Color color;
-
-  const _DissmissContent({this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    final crossAxis = CrossAxisAlignment.start;
-    final mainAxis = MainAxisAlignment.center;
-
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          crossAxisAlignment: crossAxis,
-          mainAxisAlignment: mainAxis,
-          children: [
-            Icon(Icons.cancel),
-          ],
-        ),
-      ),
-      color: color,
     );
   }
 }

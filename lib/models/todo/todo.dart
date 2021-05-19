@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-part './constants.dart';
+part 'todo_status.dart';
 
 class Todo {
-  int id;
+  int? id;
   String title;
   bool done;
 
-  Todo({this.id, this.title, this.done = false}) {
-    id = id ?? UniqueKey().hashCode;
+  Todo({this.id, required this.title, this.done = false}) {
+    id = id ?? Todo._newID();
   }
 
-  bool toggleDone() => done = !done;
-
-  _TodoStatus get status {
-    return _TODO_STATUS[done];
+  void toggleDone() {
+    done = !done;
   }
+
+  _TodoStatus get status => _TODO_STATUS[done]!;
+
+  static int _newID() => UniqueKey().hashCode;
 }
 
 class TodoList {
@@ -25,16 +27,11 @@ class TodoList {
   int get length => _items.length;
 
   void addTodo(String title) {
-    _items.add(Todo(id: _newID(), title: title));
+    _items.add(Todo(title: title));
   }
 
-  Todo getItem(int index) {
-    return _items[index];
-  }
+  Todo getItemById(int id) => _items.firstWhere((item) => item.id == id);
+  Todo getItemByIndex(int index) => _items[index];
 
-  void removeItem(int index) {
-    _items.removeAt(index);
-  }
-
-  int _newID() => _items.last.id + 1;
+  void removeItem(int id) => _items.removeWhere((item) => item.id == id);
 }
